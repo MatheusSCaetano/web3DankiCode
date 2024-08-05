@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.11.1/web3.min.js"></script>
+
+    <script>
+        async function Init() {
+            if (window.ethereum) {
+                //Inicializar acarteira
+                var web3 = new Web3(window.ethereum);
+                try{
+                    const eth = window.ethereum;
+                    const accounts = await ethereum.request({method:'eth_requestAccounts'});
+                    const account = accounts[0];
+
+                    //Pegando assinatura
+                    const sign = await ethereum.request({method: 'personal_sign',"params":["Eu sou o dono da conta", account]});
+                    console.log(sign);
+
+
+                    //cosnsole.log(account);
+                    //server side
+                    //Verificar assinatura no back
+                    const contaVerificada =  web3.eth.accounts.recover("Eu sou o dono da conta", sign);
+                    console.log(contaVerificada);
+
+                }catch(error){
+                    
+
+                }
+            } else {
+                alert('Não possui a carteira instalada');
+            }
+        }
+Init();
+    </script>
+
+
+</body>
+
+</html>
